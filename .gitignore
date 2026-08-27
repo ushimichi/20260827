@@ -1,0 +1,90 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.npm/
+.yarn/
+.yarn-cache/
+
+# Build and coverage outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Logs and runtime files
+*.log
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+# Temporary files
+.tmp/
+tmp/
+temp/
+.cache/
+*.tmp
+*.temp
+
+# TypeScript and tooling
+*.tsbuildinfo
+.eslintcache
+.stylelintcache
+.vite/
+
+# Python (if used by tooling or backend)
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Java (if used by backend)
+target/
+*.class
+
+# Local databases and data files
+*.sqlite
+*.sqlite3
+*.db
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# VS Code and local IDE settings
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.iml
+
+# Playwright artifacts
+blob-report/
+
+# Local deployment and tool state
+.vercel/
+.netlify/
+.turbo/
+
+# Generated files; source files under docs/ remain tracked for GitHub Pages
+*.generated.*
