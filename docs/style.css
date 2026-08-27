@@ -1,0 +1,105 @@
+:root {
+  --bg-gradient-start: #f5f3ff;
+  --bg-gradient-end: #fdf2f8;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-sub: #6b7280;
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
+  color: var(--text-main);
+  background: linear-gradient(180deg, var(--bg-gradient-start), var(--bg-gradient-end));
+  min-height: 100vh;
+}
+
+.hero {
+  text-align: center;
+  padding: 48px 16px 32px;
+}
+
+.hero-image {
+  width: min(700px, 90%);
+  height: auto;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
+}
+
+.hero h1 {
+  margin: 24px 0 8px;
+  font-size: clamp(28px, 5vw, 44px);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.hero .subtitle {
+  color: var(--text-sub);
+  margin: 0;
+}
+
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 16px 48px;
+  display: grid;
+  gap: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 8px 24px rgba(31, 41, 55, 0.08);
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+.output {
+  font-size: 20px;
+  min-height: 1.5em;
+}
+
+button {
+  appearance: none;
+  border: none;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 16px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+footer {
+  text-align: center;
+  color: var(--text-sub);
+  padding: 16px;
+  font-size: 14px;
+}
+
+.pop {
+  animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.9); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}

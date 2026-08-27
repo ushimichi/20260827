@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" role="img" aria-labelledby="title desc">
+  <title id="title">Hello World イラスト</title>
+  <desc id="desc">グラデーション背景に地球と星をあしらったウェルカムイラスト</desc>
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="50%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <radialGradient id="planetGradient" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#a7f3d0"/>
+      <stop offset="60%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="400" rx="24" fill="url(#skyGradient)"/>
+
+  <g opacity="0.9">
+    <circle cx="80" cy="60" r="2.5" fill="#ffffff"/>
+    <circle cx="140" cy="110" r="1.8" fill="#ffffff"/>
+    <circle cx="620" cy="50" r="2" fill="#ffffff"/>
+    <circle cx="700" cy="90" r="2.6" fill="#ffffff"/>
+    <circle cx="740" cy="200" r="1.6" fill="#ffffff"/>
+    <circle cx="60" cy="260" r="2" fill="#ffffff"/>
+    <circle cx="200" cy="40" r="1.4" fill="#ffffff"/>
+    <circle cx="500" cy="330" r="1.8" fill="#ffffff"/>
+  </g>
+
+  <circle cx="630" cy="290" r="70" fill="url(#planetGradient)"/>
+  <ellipse cx="630" cy="290" rx="105" ry="18" fill="none" stroke="#ffffff" stroke-opacity="0.6" stroke-width="4" transform="rotate(-15 630 290)"/>
+
+  <g transform="translate(70,150)">
+    <rect x="0" y="0" width="230" height="160" rx="16" fill="#ffffff" fill-opacity="0.12"/>
+    <circle cx="115" cy="70" r="46" fill="#fde68a"/>
+    <circle cx="100" cy="58" r="6" fill="#78350f"/>
+    <circle cx="132" cy="58" r="6" fill="#78350f"/>
+    <path d="M95 88 Q115 105 137 88" stroke="#78350f" stroke-width="5" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <text x="400" y="220" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="56" font-weight="700" fill="#ffffff">Hello, World!</text>
+  <text x="400" y="260" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="20" fill="#f5f3ff">GitHub Pages Sample Site</text>
+</svg>

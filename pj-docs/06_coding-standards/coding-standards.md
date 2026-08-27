@@ -1,0 +1,129 @@
+# コーディング規約
+
+> ⚠️ **本資料はテンプレート（雛形）です。** 内容を変更して資料作成を開始する際は、このメッセージを削除してください。該当しない項目には「該当なし」と記載してください。
+
+| 項目 | 内容 |
+| --- | --- |
+| プロジェクト名 | TaskFlow |
+| 作成日 | [YYYY/MM/DD] |
+| 版数 | v0.1 |
+
+## 1. 目的
+
+コード品質の統一、可読性・保守性の向上、レビューコストの削減を目的とする。
+
+## 2. 対象技術スタック（例）
+
+| 領域 | 技術 |
+| --- | --- |
+| フロントエンド | TypeScript / React |
+| バックエンド | TypeScript(Node.js) または [言語を記載] |
+| DB | PostgreSQL |
+| E2Eテスト | Playwright |
+| 単体テスト | [Jest / Vitest 等] |
+| Lint/Format | ESLint / Prettier |
+| CI/CD | GitHub Actions（例） |
+
+## 3. 命名規約
+
+| 対象 | 規約 | 例 |
+| --- | --- | --- |
+| ファイル名 | ケバブケース | `task-board.tsx` |
+| クラス/型 | パスカルケース | `TaskService` |
+| 変数/関数 | キャメルケース | `getTaskById` |
+| 定数 | アッパースネークケース | `MAX_TITLE_LENGTH` |
+| DBテーブル | スネークケース・複数形 | `tasks` |
+| ブランチ名 | `feature/xxx`, `fix/xxx`, `hotfix/xxx` | `feature/task-board-dnd` |
+
+## 4. コーディングルール（共通）
+
+- 1関数1責務を原則とし、関数の行数は目安50行以内。
+- マジックナンバー・マジック文字列は定数化する。
+- 例外は握りつぶさず、ログ出力または上位へ伝播させる。
+- Nullable/Optionalな値は明示的に型で表現する。
+- 秘匿情報（APIキー、パスワード等）はソースコードに直書きせず環境変数/Secret管理サービスを利用する。
+- SQLは必ずプレースホルダ/ORMを使用し、文字列連結によるSQL生成を禁止する（SQLインジェクション対策）。
+- 外部入力は必ずバリデーション・サニタイズを行う（XSS/インジェクション対策）。
+
+## 5. Git運用ルール
+
+| 項目 | ルール |
+| --- | --- |
+| ブランチ戦略 | GitHub Flow（`main` + `feature/*` + PRベース） |
+| コミットメッセージ | `<type>: <概要>` 形式（例: `feat: タスク作成APIを追加`） |
+| Pull Request | 1PR 1目的、レビュワー1名以上の承認必須 |
+| マージ方式 | Squash Merge推奨 |
+
+## 6. コードレビュー観点
+
+- [ ] 要件定義書・外部/内部設計書との整合性
+- [ ] 命名規約・フォーマットの遵守
+- [ ] エラーハンドリングの妥当性
+- [ ] セキュリティ観点（入力検証、認可チェック漏れ等）
+- [ ] テストコードの有無・カバレッジ
+- [ ] 不要なコメントアウト・デバッグコードの削除
+
+## 7. 開発・テストツール
+
+### 7.1 Lint / Format
+
+| ツール | 用途 | 実行タイミング |
+| --- | --- | --- |
+| ESLint | 静的解析 | コミット前フック、CI |
+| Prettier | フォーマット統一 | 保存時、コミット前フック |
+
+### 7.2 単体テスト
+
+- フロントエンド/バックエンドともに主要ロジックはユニットテストを必須とする。
+- カバレッジ目標：ステートメントカバレッジ [80]% 以上（コアロジックは [90]% 以上）。
+
+### 7.3 E2Eテスト（Playwright）
+
+- 主要ユーザーシナリオ（ログイン、タスク作成、ステータス変更、通知確認等）はPlaywrightでE2Eテストを作成する。
+- テストは `tests/e2e/` 配下に機能単位で配置する。
+
+```typescript
+// tests/e2e/task-board.spec.ts の例
+import { test, expect } from '@playwright/test';
+
+test('タスクを作成してボードに表示される', async ({ page }) => {
+  await page.goto('/login');
+  await page.getByLabel('メールアドレス').fill('[email protected]');
+  await page.getByLabel('パスワード').fill('password');
+  await page.getByRole('button', { name: 'ログイン' }).click();
+
+  await page.getByRole('button', { name: '新規タスク' }).click();
+  await page.getByLabel('タイトル').fill('サンプルタスク');
+  await page.getByRole('button', { name: '保存' }).click();
+
+  await expect(page.getByText('サンプルタスク')).toBeVisible();
+});
+```
+
+| 項目 | 方針 |
+| --- | --- |
+| 実行環境 | Chromium/Firefox/WebKit（CIでは主要ブラウザのみ） |
+| 実行タイミング | PR作成時、mainマージ前にCIで自動実行 |
+| テストデータ | テスト専用のワークスペース/DBを使用し本番データに影響を与えない |
+| フレーキーテスト対策 | 明示的な待機（`expect(...).toBeVisible()`等）を使用し `waitForTimeout` は極力避ける |
+
+### 7.4 CI/CD
+
+| ステージ | 内容 |
+| --- | --- |
+| Lint | ESLint/Prettierチェック |
+| 単体テスト | Jest/Vitest実行、カバレッジ計測 |
+| E2Eテスト | Playwright実行（PR/main） |
+| ビルド | フロントエンド/バックエンドのビルド |
+| デプロイ | ステージング自動デプロイ、本番は承認フロー経由 |
+
+## 8. ドキュメントコメント方針
+
+- 公開API・複雑なロジックのみコメントを記載し、自明なコードへのコメントは避ける。
+- TODOコメントは `TODO(氏名): 内容` の形式でIssue番号を併記する。
+
+## 9. 変更履歴
+
+| 版数 | 日付 | 変更内容 | 作成者 |
+| --- | --- | --- | --- |
+| v0.1 | [YYYY/MM/DD] | 初版作成 | [氏名] |
